@@ -9,7 +9,7 @@ RUN yum install -y httpd zip unzip \
 ADD https://html5up.net/massively/download /var/www/html/massively.zip
 
 WORKDIR /var/www/html/
-RUN unzip massively.zip -d massively\  # Unzip into a 'massively' directory
+RUN unzip massively.zip -d massively && \  # Unzip into a 'massively' directory
     && rm -f massively.zip  # Remove the zip file after extraction
 
 # Copy the extracted files into the desired location
