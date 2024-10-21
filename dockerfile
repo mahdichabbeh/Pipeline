@@ -6,7 +6,7 @@ RUN yum install -y httpd zip unzip \
     && yum clean all  # Clean up to reduce image size
 
 # Add your template
-ADD https://html5up.net/massively/download /var/www/html/
+ADD https://html5up.net/massively/download /var/www/html/massively.zip
 
 WORKDIR /var/www/html/
 RUN unzip massively.zip \
