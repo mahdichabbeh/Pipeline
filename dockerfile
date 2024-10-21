@@ -9,12 +9,11 @@ RUN yum install -y httpd zip unzip \
 ADD https://html5up.net/massively/download /var/www/html/massively.zip
 
 WORKDIR /var/www/html/
-RUN unzip massively.zip -d massively && \  # Unzip into a 'massively' directory
-    && rm -f massively.zip  # Remove the zip file after extraction
+RUN mkdir massively
 
-# Copy the extracted files into the desired location
-RUN cp -rvf massively/* . \
-    && rm -rf massively  # Clean up the temporary directory
+RUN unzip massively.zip \
+    && cp -rvf massively/* . \
+    && rm -rf massively massively.zip
 
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 EXPOSE 80
