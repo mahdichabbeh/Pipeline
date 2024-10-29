@@ -28,9 +28,11 @@
         kubeconfig: /home/ubuntu/.kube/config  # Specify your kubeconfig
         state: present
         src: /home/ubuntu/Deployment.yml  # Path to your existing Deployment YAML file
+        namespace: default
 
     - name: Create new service
       kubernetes.core.k8s:
         kubeconfig: /home/ubuntu/.kube/config  # Specify your kubeconfig
         state: present
         src: /home/ubuntu/Service.yml  # Path to your existing Service YAML file
+        namespace: default
