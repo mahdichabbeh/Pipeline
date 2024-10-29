@@ -3,6 +3,8 @@
   tasks: 
      - name: delete old deployment
        command: kubectl delete -f /home/ubuntu/Deployment.yml
+       verify_ssl: yes
+       ssl_ca_cert: /home/ubuntu/.minikube/ca.crt
      - name: delete old service
        command: kubectl delete -f /home/ubuntu/Service.yml
      - name: create new deployment
