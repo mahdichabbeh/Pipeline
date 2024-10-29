@@ -1,13 +1,36 @@
 - hosts: all
   become: true
-  tasks: 
-     - name: delete old deployment
-       command: kubectl delete -f /home/ubuntu/Deployment.yml
-       verify_ssl: yes
-       ssl_ca_cert: /home/ubuntu/.minikube/ca.crt
-     - name: delete old service
-       command: kubectl delete -f /home/ubuntu/Service.yml
-     - name: create new deployment
-       command: kubectl apply -f /home/ubuntu/Deployment.yml
-     - name: create new service
-       command: kubectl apply -f /home/ubuntu/Service.yml
+  tasks:
+    - name: Delete old deployment
+      kubernetes.core.k8s:
+        kubeconfig: /home/ubuntu/.kube/config  # Specify your kubeconfig
+        state: absent
+        definition: 
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: elzarafa  # Update with your deployment name
+            namespace: default  # Specify namespace if not default
+
+    - name: Delete old service
+      kubernetes.core.k8s:
+        kubeconfig: /home/ubuntu/.kube/config  # Specify your kubeconfig
+        state: absent
+        definition: 
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: ElZarafa  # Update with your service name
+            namespace: default  # Specify namespace if not default
+
+    - name: Create new deployment
+      kubernetes.core.k8s:
+        kubeconfig: /home/ubuntu/.kube/config  # Specify your kubeconfig
+        state: present
+        src: /home/ubuntu/Deployment.yml  # Path to your existing Deployment YAML file
+
+    - name: Create new service
+      kubernetes.core.k8s:
+        kubeconfig: /home/ubuntu/.kube/config  # Specify your kubeconfig
+        state: present
+        src: /home/ubuntu/Service.yml  # Path to your existing Service YAML file
