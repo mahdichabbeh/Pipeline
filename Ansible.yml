@@ -1,0 +1,24 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Delete old deployment
+      k8s:
+        state: absent                      # Ensures the deployment is deleted
+        definition: /home/ubuntu/Deployment.yml
+      ignore_errors: true                  # Ignores error if the deployment doesn’t exist
+
+    - name: Delete old service
+      k8s:
+        state: absent                      # Ensures the service is deleted
+        definition: /home/ubuntu/Service.yml
+      ignore_errors: true                  # Ignores error if the service doesn’t exist
+
+    - name: Create new deployment
+      k8s:
+        state: present                     # Ensures the deployment is created
+        definition: /home/ubuntu/Deployment.yml
+
+    - name: Create new service
+      k8s:
+        state: present                     # Ensures the service is created
+        definition: /home/ubuntu/Service.yml
