@@ -1,24 +1,11 @@
 - hosts: all
   become: true
-  tasks:
-    - name: Delete old deployment
-      k8s:
-        state: absent                      # Ensures the deployment is deleted
-        definition: /home/ubuntu/Deployment.yml
-      ignore_errors: true                  # Ignores error if the deployment doesn’t exist
-
-    - name: Delete old service
-      k8s:
-        state: absent                      # Ensures the service is deleted
-        definition: /home/ubuntu/Service.yml
-      ignore_errors: true                  # Ignores error if the service doesn’t exist
-
-    - name: Create new deployment
-      k8s:
-        state: present                     # Ensures the deployment is created
-        definition: /home/ubuntu/Deployment.yml
-
-    - name: Create new service
-      k8s:
-        state: present                     # Ensures the service is created
-        definition: /home/ubuntu/Service.yml
+  tasks: 
+     - name: delete old deployment
+       command: kubectl delete -f /home/ubuntu/Deployment.yml
+     - name: delete old service
+       command: kubectl delete -f /home/ubuntu/Service.yml
+     - name: create new deployment
+       command: kubectl apply -f /home/ubuntu/Deployment.yml
+     - name: create new service
+       command: kubectl apply -f /home/ubuntu/Service.yml
