@@ -13,4 +13,4 @@ RUN unzip massively.zip \
     && rm -f massively.zip  # Remove the zip file after extraction
 
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-EXPOSE 80 22
+EXPOSE 80
